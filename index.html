@@ -49,6 +49,11 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--cream);color:var(--i
 .field-row{display:flex;flex-direction:column;gap:8px;margin-bottom:10px;}
 .field-row label{font-size:15px;font-weight:700;color:var(--muted);}
 .field-row input{font-size:20px;padding:14px;border-radius:10px;border:2px solid var(--border);font-family:'Noto Sans TC',sans-serif;width:100%;}
+.currency-card{background:linear-gradient(135deg,#fff,#f7efe5);border:2px solid var(--gold);}
+.currency-total{background:var(--ink);color:white;border-radius:14px;padding:18px;margin:14px 0;text-align:center;}
+.currency-total .lbl{font-size:14px;color:#ddd;margin-bottom:4px;}
+.currency-total .num{font-size:34px;font-weight:900;color:var(--gold);}
+.currency-hint{font-size:14px;color:var(--muted);line-height:1.8;margin-top:8px;}
 .save-btn{background:var(--blue);color:white;border:none;border-radius:10px;padding:12px;font-size:16px;font-weight:700;cursor:pointer;width:100%;}
 .loc-result{margin-top:12px;background:#fff8e1;border:2px solid var(--gold);border-radius:12px;padding:14px;font-size:16px;line-height:1.8;display:none;}
 .loc-result.show{display:block;}
@@ -160,6 +165,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--cream);color:var(--i
   <button class="tab-btn active" onclick="sw('itinerary',this)">📅 行程</button>
   <button class="tab-btn" onclick="sw('hotel',this)">🏨 飯店</button>
   <button class="tab-btn" onclick="sw('food',this)">🥗 飲食字卡</button>
+  <button class="tab-btn" onclick="sw('currency',this)">💱 匯率</button>
   <button class="tab-btn sos" onclick="sw('sos',this)">🚨 緊急</button>
 </nav>
 </div>
@@ -259,6 +265,33 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--cream);color:var(--i
   </div>
 </div>
 
+<!-- ══════════ 匯率換算 ══════════ -->
+<div id="panel-currency" class="panel">
+  <div class="card currency-card">
+    <div class="card-title">💱 日幣換台幣</div>
+
+    <div class="field-row">
+      <label>日幣金額（JPY）</label>
+      <input type="number" id="jpyAmount" inputmode="decimal" min="0" step="1" placeholder="例：1280" oninput="calcCurrency()">
+    </div>
+
+    <div class="field-row">
+      <label>匯率：1 日圓 = 幾台幣</label>
+      <input type="number" id="jpyRate" inputmode="decimal" min="0" step="0.001" value="0.20" oninput="calcCurrency()">
+    </div>
+
+    <div class="currency-total">
+      <div class="lbl">約等於台幣</div>
+      <div class="num" id="twdResult">NT$ 0</div>
+    </div>
+
+    <button class="save-btn" onclick="saveCurrencyRate()">💾 儲存這個匯率</button>
+    <div class="currency-hint">
+      小提醒：匯率會每天變動，現場可依銀行或換匯 APP 顯示的日圓匯率調整。常用快速估法：日幣 × 0.20 ≈ 台幣。
+    </div>
+  </div>
+</div>
+
 <!-- ══════════ 🚨 緊急聯絡 ══════════ -->
 <div id="panel-sos" class="panel">
   <div class="sos-intro">
@@ -346,6 +379,30 @@ function showToast(msg){
   t.textContent = msg;
   t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'), 2400);
+}
+
+// ══════════════════════════════════════
+// CURRENCY
+// ══════════════════════════════════════
+function loadCurrencyRate(){
+  const savedRate = localStorage.getItem('jpyRate');
+  if(savedRate){
+    document.getElementById('jpyRate').value = savedRate;
+  }
+  calcCurrency();
+}
+function calcCurrency(){
+  const amount = parseFloat(document.getElementById('jpyAmount').value) || 0;
+  const rate = parseFloat(document.getElementById('jpyRate').value) || 0;
+  const total = Math.round(amount * rate);
+  document.getElementById('twdResult').textContent = 'NT$ ' + total.toLocaleString('zh-TW');
+}
+function saveCurrencyRate(){
+  const rate = document.getElementById('jpyRate').value.trim();
+  if(!rate || Number(rate) <= 0){ showToast('請輸入有效匯率'); return; }
+  localStorage.setItem('jpyRate', rate);
+  calcCurrency();
+  showToast('✅ 已儲存匯率');
 }
 
 // ══════════════════════════════════════
@@ -770,6 +827,7 @@ window.addEventListener('resize', stickyDayScroll);
 // STARTUP
 // ══════════════════════════════════════
 loadContacts();
+loadCurrencyRate();
 renderHotels();
 renderDayScroll();
 showDay(0, document.querySelector('.day-btn'));
