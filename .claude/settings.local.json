@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Start-Process \"d:\\\\Desktop\\\\AI��Ƨ�\\\\taiwan-company-game.html\")",
+      "Bash(gh auth *)",
+      "Bash(gh repo *)",
+      "Bash(git init *)",
+      "Bash(git remote *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git config *)",
+      "Bash(git branch *)",
+      "Bash(git push *)",
+      "Bash(gh api *)",
+      "Bash(cd \"d:/Desktop/AI資料夾\" && cp taiwan-company-game.html index.html && git add index.html && git commit -m \"Add index.html for GitHub Pages root URL\" && git push 2>&1)"
+    ]
+  }
+}
