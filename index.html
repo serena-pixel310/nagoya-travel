@@ -301,21 +301,20 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--cream);color:var(--i
   </div>
 
   <div class="card">
-    <div class="card-title">📋 複製地址</div>
-    <div class="field-row">
-      <label>目前住宿／集合地址</label>
-      <textarea id="emergencyAddress">名古屋榮彩鴻酒店（Travelodge Nagoya Sakae）
-〒460-0003
-愛知県名古屋市中区錦3丁目1-22</textarea>
+    <div class="card-title">📍 複製我目前的位置</div>
+    <div style="font-size:15px;color:#444;margin-bottom:12px;line-height:1.8;">
+      迷路或跟親戚約見面時，點下面按鈕，<br>
+      APP 會抓您現在的位置並自動複製，<br>
+      貼到 LINE 傳給家人或親戚即可。
     </div>
-    <button class="big-btn blue" onclick="copyEmergencyAddress()">📋 複製地址<small>可貼到 LINE 或給司機看</small></button>
-    <button class="save-btn" onclick="saveEmergencyAddress()">💾 儲存地址</button>
+    <button class="big-btn green" onclick="getMyLocation()">📍 點我複製目前位置<small>取得 GPS 定位</small></button>
+    <div class="loc-result" id="locResult"></div>
   </div>
 
   <div class="card">
     <div class="card-title">🏨 忘記路怎麼辦？</div>
     <div style="font-size:15px;color:#444;line-height:1.9;margin-bottom:12px;">
-      1️⃣ 先複製上方地址，貼給家人或拿給店員看<br>
+      1️⃣ 先用上方按鈕複製目前位置，貼給家人或拿給店員看<br>
       2️⃣ 到「🏨 飯店」分頁，找目前入住的飯店字卡<br>
       3️⃣ 點導航或請店員／計程車司機協助帶路
     </div>
@@ -323,10 +322,9 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--cream);color:var(--i
   </div>
 
   <div class="field-row">
-    <label>💬 LINE 搜尋電話（息子さん／柏緯）</label>
+    <label>👨 息子さん（柏緯）電話（第一次使用請確認號碼並儲存）</label>
     <input type="tel" id="familyPhone" value="07094585085" placeholder="例：0912345678 或 +81 90-xxxx-xxxx">
   </div>
-  <a href="#" id="lineFamilyBtn" class="big-btn line" onclick="openLinePhoneSearch();return false;">💬 複製電話並開啟 LINE<small>到加好友頁搜尋電話</small></a>
   <button class="save-btn" style="margin-bottom:16px;" onclick="saveContacts()">💾 儲存電話（下次自動記住）</button>
 
   <a href="#" id="callFamilyBtn" class="big-btn red" onclick="callSaved('familyPhone');return false;">📞 撥打電話給息子さん（柏緯）<small>Call Bowei</small></a>
@@ -352,16 +350,6 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--cream);color:var(--i
     一般護照、簽證問題（非緊急）辦公電話：06-6227-8623
   </div>
 
-  <div class="card">
-    <div class="card-title">📍 複製我目前的位置</div>
-    <div style="font-size:15px;color:#444;margin-bottom:12px;line-height:1.8;">
-      迷路或跟親戚約見面時，點下面按鈕，<br>
-      APP 會抓您現在的位置並自動複製，<br>
-      貼到 LINE 傳給家人或親戚即可。
-    </div>
-    <button class="big-btn green" onclick="getMyLocation()">📍 點我複製目前位置<small>取得 GPS 定位</small></button>
-    <div class="loc-result" id="locResult"></div>
-  </div>
 </div>
 
 </main>
@@ -424,7 +412,6 @@ function saveContacts(){
 }
 function loadContacts(){
   document.getElementById('familyPhone').value = localStorage.getItem('familyPhone') || '07094585085';
-  document.getElementById('emergencyAddress').value = localStorage.getItem('emergencyAddress') || document.getElementById('emergencyAddress').value;
 }
 function callSaved(fieldId){
   const num = document.getElementById(fieldId).value.trim();
@@ -434,23 +421,6 @@ function callSaved(fieldId){
 function openHotelTab(){
   const btn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.textContent.includes('飯店'));
   if(btn){ sw('hotel', btn); }
-}
-function saveEmergencyAddress(){
-  const address = document.getElementById('emergencyAddress').value.trim();
-  if(!address){ showToast('請先輸入地址'); return; }
-  localStorage.setItem('emergencyAddress', address);
-  showToast('✅ 已儲存地址');
-}
-function copyEmergencyAddress(){
-  const address = document.getElementById('emergencyAddress').value.trim();
-  if(!address){ showToast('請先輸入地址'); return; }
-  copyPlainText(address, '✅ 已複製地址');
-}
-function openLinePhoneSearch(){
-  const phone = document.getElementById('familyPhone').value.trim();
-  if(!phone){ showToast('請先輸入電話號碼'); return; }
-  copyPlainText(phone.replace(/[^0-9+]/g,''), '✅ 已複製電話，請在 LINE 選搜尋電話貼上');
-  setTimeout(()=>{ window.location.href = 'https://line.me/R/nv/addFriends'; }, 700);
 }
 
 function getMyLocation(){
