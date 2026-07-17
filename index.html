@@ -49,6 +49,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--cream);color:var(--i
 .field-row{display:flex;flex-direction:column;gap:8px;margin-bottom:10px;}
 .field-row label{font-size:15px;font-weight:700;color:var(--muted);}
 .field-row input{font-size:20px;padding:14px;border-radius:10px;border:2px solid var(--border);font-family:'Noto Sans TC',sans-serif;width:100%;}
+.field-row textarea{font-size:17px;padding:14px;border-radius:10px;border:2px solid var(--border);font-family:'Noto Sans TC',sans-serif;width:100%;min-height:112px;line-height:1.7;resize:vertical;}
 .currency-card{background:linear-gradient(135deg,#fff,#f7efe5);border:2px solid var(--gold);}
 .currency-total{background:var(--ink);color:white;border-radius:14px;padding:18px;margin:14px 0;text-align:center;}
 .currency-total .lbl{font-size:14px;color:#ddd;margin-bottom:4px;}
@@ -299,18 +300,36 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--cream);color:var(--i
     <p>遇到困難時，先深呼吸，再點下面的按鈕求助</p>
   </div>
 
-  <div class="field-row">
-    <label>👨 息子さん（柏緯）電話（第一次使用請確認號碼並儲存）</label>
-    <input type="tel" id="familyPhone" value="07094585085" placeholder="例：0912345678 或 +81 90-xxxx-xxxx">
+  <div class="card">
+    <div class="card-title">📋 複製地址</div>
+    <div class="field-row">
+      <label>目前住宿／集合地址</label>
+      <textarea id="emergencyAddress">名古屋榮彩鴻酒店（Travelodge Nagoya Sakae）
+〒460-0003
+愛知県名古屋市中区錦3丁目1-22</textarea>
+    </div>
+    <button class="big-btn blue" onclick="copyEmergencyAddress()">📋 複製地址<small>可貼到 LINE 或給司機看</small></button>
+    <button class="save-btn" onclick="saveEmergencyAddress()">💾 儲存地址</button>
   </div>
-  <a href="#" id="callFamilyBtn" class="big-btn red" onclick="callSaved('familyPhone');return false;">📞 撥打電話給息子さん（柏緯）<small>Call Bowei</small></a>
+
+  <div class="card">
+    <div class="card-title">🏨 忘記路怎麼辦？</div>
+    <div style="font-size:15px;color:#444;line-height:1.9;margin-bottom:12px;">
+      1️⃣ 先複製上方地址，貼給家人或拿給店員看<br>
+      2️⃣ 到「🏨 飯店」分頁，找目前入住的飯店字卡<br>
+      3️⃣ 點導航或請店員／計程車司機協助帶路
+    </div>
+    <button class="big-btn green" onclick="openHotelTab()">🏨 打開飯店分頁<small>看地址、電話、導航</small></button>
+  </div>
 
   <div class="field-row">
-    <label>💬 LINE ID／LINE 電話號碼（用於開啟 LINE 對話）</label>
-    <input type="text" id="familyLine" placeholder="例：0912345678">
+    <label>💬 LINE 搜尋電話（息子さん／柏緯）</label>
+    <input type="tel" id="familyPhone" value="07094585085" placeholder="例：0912345678 或 +81 90-xxxx-xxxx">
   </div>
-  <a href="#" id="lineFamilyBtn" class="big-btn line" onclick="openLine();return false;">💬 傳 LINE 訊息給息子さん<small>Open LINE</small></a>
-  <button class="save-btn" style="margin-bottom:16px;" onclick="saveContacts()">💾 儲存以上聯絡資訊（下次自動記住）</button>
+  <a href="#" id="lineFamilyBtn" class="big-btn line" onclick="openLinePhoneSearch();return false;">💬 複製電話並開啟 LINE<small>到加好友頁搜尋電話</small></a>
+  <button class="save-btn" style="margin-bottom:16px;" onclick="saveContacts()">💾 儲存電話（下次自動記住）</button>
+
+  <a href="#" id="callFamilyBtn" class="big-btn red" onclick="callSaved('familyPhone');return false;">📞 撥打電話給息子さん（柏緯）<small>Call Bowei</small></a>
 
   <div class="emergency-num">
     <div class="lbl">🚑 日本救護車／消防（免費，可請店員代撥）</div>
@@ -342,15 +361,6 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--cream);color:var(--i
     </div>
     <button class="big-btn green" onclick="getMyLocation()">📍 點我複製目前位置<small>取得 GPS 定位</small></button>
     <div class="loc-result" id="locResult"></div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">🏨 忘記路怎麼辦？</div>
-    <div style="font-size:15px;color:#444;line-height:1.9;">
-      1️⃣ 到「🏨 飯店」分頁，找到目前入住的飯店字卡<br>
-      2️⃣ 把手機畫面拿給路人／店員／計程車司機看<br>
-      3️⃣ 請對方幫忙帶路或叫計程車即可
-    </div>
   </div>
 </div>
 
@@ -410,22 +420,37 @@ function saveCurrencyRate(){
 // ══════════════════════════════════════
 function saveContacts(){
   localStorage.setItem('familyPhone', document.getElementById('familyPhone').value.trim());
-  localStorage.setItem('familyLine', document.getElementById('familyLine').value.trim());
-  showToast('✅ 已儲存聯絡資訊');
+  showToast('✅ 已儲存電話');
 }
 function loadContacts(){
   document.getElementById('familyPhone').value = localStorage.getItem('familyPhone') || '07094585085';
-  document.getElementById('familyLine').value = localStorage.getItem('familyLine') || '';
+  document.getElementById('emergencyAddress').value = localStorage.getItem('emergencyAddress') || document.getElementById('emergencyAddress').value;
 }
 function callSaved(fieldId){
   const num = document.getElementById(fieldId).value.trim();
   if(!num){ showToast('請先輸入電話號碼並儲存'); return; }
   window.location.href = 'tel:' + num.replace(/[^0-9+]/g,'');
 }
-function openLine(){
-  const id = document.getElementById('familyLine').value.trim();
-  if(!id){ showToast('請先輸入 LINE ID 或電話並儲存'); return; }
-  window.location.href = 'line://ti/p/~' + encodeURIComponent(id);
+function openHotelTab(){
+  const btn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.textContent.includes('飯店'));
+  if(btn){ sw('hotel', btn); }
+}
+function saveEmergencyAddress(){
+  const address = document.getElementById('emergencyAddress').value.trim();
+  if(!address){ showToast('請先輸入地址'); return; }
+  localStorage.setItem('emergencyAddress', address);
+  showToast('✅ 已儲存地址');
+}
+function copyEmergencyAddress(){
+  const address = document.getElementById('emergencyAddress').value.trim();
+  if(!address){ showToast('請先輸入地址'); return; }
+  copyPlainText(address, '✅ 已複製地址');
+}
+function openLinePhoneSearch(){
+  const phone = document.getElementById('familyPhone').value.trim();
+  if(!phone){ showToast('請先輸入電話號碼'); return; }
+  copyPlainText(phone.replace(/[^0-9+]/g,''), '✅ 已複製電話，請在 LINE 選搜尋電話貼上');
+  setTimeout(()=>{ window.location.href = 'https://line.me/R/nv/addFriends'; }, 700);
 }
 
 function getMyLocation(){
@@ -462,16 +487,19 @@ function getMyLocation(){
     box.innerHTML = '⚠️ 無法取得定位，請確認手機已開啟「定位服務」並允許瀏覽器使用位置。';
   }, {enableHighAccuracy:true, timeout:12000});
 }
-function copyText(btn){
-  const text = decodeURIComponent(btn.getAttribute('data-copy'));
+function copyPlainText(text, successMsg){
   if(navigator.clipboard && navigator.clipboard.writeText){
-    navigator.clipboard.writeText(text).then(()=>showToast('✅ 已複製，請到 LINE 貼上'));
+    navigator.clipboard.writeText(text).then(()=>showToast(successMsg));
   } else {
     const ta = document.createElement('textarea');
     ta.value = text; document.body.appendChild(ta); ta.select();
     document.execCommand('copy'); document.body.removeChild(ta);
-    showToast('✅ 已複製，請到 LINE 貼上');
+    showToast(successMsg);
   }
+}
+function copyText(btn){
+  const text = decodeURIComponent(btn.getAttribute('data-copy'));
+  copyPlainText(text, '✅ 已複製，請到 LINE 貼上');
 }
 
 // ══════════════════════════════════════
