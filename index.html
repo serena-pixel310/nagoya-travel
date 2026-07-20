@@ -856,6 +856,7 @@ function showDay(idx, btn) {
           </div>`).join('')}
       </div>
     </div>`;
+  requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: 'auto' }));
 }
 
 function stickyDayScroll(){
