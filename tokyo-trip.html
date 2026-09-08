@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0">
+<title>東京旅行筆記 2026 | Tokyo Trip Notebook</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@600;800&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap');
+
+:root {
+  --ink: #1a1a2e;
+  --ink-light: #2c3e6e;
+  --red: #c0392b;
+  --gold: #d4a017;
+  --cream: #faf6f0;
+  --warm: #f0e8d8;
+  --muted: #6b6357;
+  --card: #ffffff;
+  --border: #e8ddd0;
+  --green: #1e8449;
+  --blue: #1a5276;
+  --orange: #e65100;
+  --purple: #6a1b9a;
+  --pink: #d81b60;
+  --shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Noto Sans TC', -apple-system, sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  min-height: 100vh;
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.top-fixed { position: sticky; top: 0; z-index: 300; }
+.app-header {
+  background: linear-gradient(135deg, #161625, #232946);
+  color: white;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 14px rgba(0,0,0,.35);
+}
+.app-header h1 {
+  font-size: 21px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.app-header h1 span { color: var(--gold); }
+.header-sub {
+  font-size: 13px;
+  color: #d1d5db;
+  text-align: right;
+  line-height: 1.4;
+}
+
+/* Nav Tabs */
+.nav-tabs {
+  display: flex;
+  overflow-x: auto;
+  background: #111424;
+  border-top: 1px solid rgba(255,255,255,.1);
+  scrollbar-width: none;
+}
+.nav-tabs::-webkit-scrollbar { display: none; }
+.tab-btn {
+  flex-shrink: 0;
+  padding: 13px 15px;
+  background: none;
+  border: none;
+  color: #a0aab8;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: 'Noto Sans TC', sans-serif;
+  cursor: pointer;
+  border-bottom: 4px solid transparent;
+  transition: all .2s;
+  white-space: nowrap;
+}
+.tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+.tab-btn.sos { color: #f87171; }
+.tab-btn.sos.active { color: #ff8a80; border-bottom-color: #ff8a80; }
+
+.main { padding: 16px; max-width: 840px; margin: 0 auto; padding-bottom: 60px; }
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* Cards & UI Blocks */
+.card {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 16px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+.card-title {
+  font-size: 19px;
+  font-weight: 900;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 3px solid var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.card-subtitle {
+  font-size: 14px;
+  color: var(--muted);
+  font-weight: 500;
+  margin-top: -6px;
+  margin-bottom: 12px;
+}
+
+/* Big Action Buttons */
+.big-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  padding: 16px 14px;
+  border: none;
+  border-radius: 16px;
+  font-size: 19px;
+  font-weight: 900;
+  font-family: 'Noto Sans TC', sans-serif;
+  cursor: pointer;
+  text-decoration: none;
+  color: white;
+  margin-bottom: 12px;
+  min-height: 60px;
+  text-align: center;
+  box-shadow: 0 3px 10px rgba(0,0,0,.15);
+  transition: transform 0.1s ease;
+}
+.big-btn:active { transform: scale(0.98); }
+.big-btn.orange { background: #e65100; }
+.big-btn.red { background: #c0392b; }
+.big-btn.green { background: #1e8449; }
+.big-btn.blue { background: #1a5276; }
+.big-btn.purple { background: #6a1b9a; }
+.big-btn small { font-size: 13px; font-weight: 400; opacity: 0.9; }
+
+/* Alert Box */
+.alert-box {
+  background: #fff8e1;
+  border-left: 5px solid var(--gold);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  font-size: 15px;
+  color: #4a3b32;
+  line-height: 1.7;
+}
+.alert-box.warning {
+  background: #fff5f5;
+  border-left-color: var(--red);
+  color: #721c24;
+}
+.alert-box.info {
+  background: #eef6fc;
+  border-left-color: var(--blue);
+  color: #1b4965;
+}
+
+/* Shinkansen Ticket Card */
+.ticket-card {
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  color: white;
+  border-radius: 16px;
+  padding: 16px 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 14px rgba(30, 60, 114, 0.25);
+}
+.ticket-card .hdr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  color: var(--gold);
+  font-weight: 800;
+  border-bottom: 1px dashed rgba(255,255,255,0.25);
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+}
+.ticket-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255,255,255,0.1);
+  padding: 12px 14px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+.ticket-row:last-child { margin-bottom: 0; }
+.ticket-route { font-size: 18px; font-weight: 900; letter-spacing: 0.5px; }
+.ticket-time { font-size: 16px; font-weight: 800; color: #ffd54f; font-family: 'Outfit', sans-serif; }
+.ticket-date { font-size: 13px; color: #e0e0e0; margin-bottom: 2px; }
+
+/* Form Fields */
+.field-row { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+.field-row label { font-size: 14px; font-weight: 700; color: var(--muted); }
+.field-row input {
+  font-size: 18px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 2px solid var(--border);
+  font-family: 'Noto Sans TC', sans-serif;
+  width: 100%;
+}
+
+.save-btn {
+  background: var(--blue);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  width: 100%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.save-btn:active { opacity: 0.9; }
+
+/* Day Scroll & Switcher */
+.day-scroll {
+  display: flex;
+  overflow-x: auto;
+  gap: 8px;
+  padding: 10px 16px;
+  scrollbar-width: none;
+  margin: 0 -16px 14px;
+  position: sticky;
+  z-index: 150;
+  background: var(--cream);
+  border-bottom: 1px solid var(--border);
+}
+.day-scroll::-webkit-scrollbar { display: none; }
+.day-btn {
+  flex-shrink: 0;
+  padding: 8px 14px;
+  border-radius: 18px;
+  border: 2px solid var(--border);
+  background: white;
+  cursor: pointer;
+  font-size: 12px;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-weight: 700;
+  transition: all .2s;
+  text-align: center;
+  line-height: 1.3;
+  color: var(--muted);
+}
+.day-btn.active { background: var(--red); color: white; border-color: var(--red); }
+.day-btn .big-date { display: block; font-size: 16px; font-weight: 900; color: var(--ink); }
+.day-btn.active .big-date { color: white; }
+
+/* Timeline */
+.timeline { position: relative; padding-left: 22px; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 7px; top: 4px; bottom: 4px;
+  width: 3px;
+  background: var(--border);
+}
+.tl-item { position: relative; margin-bottom: 22px; }
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: -20px; top: 6px;
+  width: 11px; height: 11px;
+  border-radius: 50%;
+  background: var(--gold);
+  border: 3px solid white;
+  box-shadow: 0 0 0 2px var(--gold);
+}
+.tl-item.meal::before { background: var(--green); box-shadow: 0 0 0 2px var(--green); }
+.tl-item.transport::before { background: var(--blue); box-shadow: 0 0 0 2px var(--blue); }
+.tl-item.event::before { background: var(--pink); box-shadow: 0 0 0 2px var(--pink); }
+.tl-time { font-size: 14px; color: var(--muted); font-weight: 900; letter-spacing: 0.5px; margin-bottom: 2px; }
+.tl-name { font-size: 19px; font-weight: 900; line-height: 1.4; }
+.tl-jp { font-size: 14px; color: var(--muted); font-family: 'Zen Kaku Gothic New', sans-serif; margin-top: 2px; }
+.tl-intro {
+  font-size: 15px;
+  color: #333;
+  margin-top: 8px;
+  line-height: 1.8;
+  background: var(--warm);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+.tl-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.tag { display: inline-block; padding: 4px 10px; border-radius: 12px; font-size: 13px; font-weight: 700; }
+.tag.free { background: #e8f5e9; color: #1b5e20; }
+.tag.paid { background: #fff3e0; color: #e65100; }
+.tag.food { background: #f3e5f5; color: #6a1b9a; }
+.tag.event { background: #fce4ec; color: #c2185b; }
+.tag.train { background: #e3f2fd; color: #0d47a1; }
+
+.t-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 20px;
+  font-size: 15px;
+  font-family: 'Noto Sans TC', sans-serif;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 800;
+  color: white;
+  min-height: 44px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
+.t-btn.subway { background: #c0392b; }
+.t-btn.train { background: #8e44ad; }
+.t-btn.bus { background: #d68910; }
+.t-btn.walk { background: #1e8449; }
+.t-btn.taxi { background: #e67e22; }
+
+/* Day Header */
+.day-header {
+  background: linear-gradient(135deg, var(--ink), #2a3459);
+  color: white;
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 14px;
+}
+.day-header .day-num { font-size: 12px; color: #aab; font-weight: 700; letter-spacing: 1px; }
+.day-header .day-date-big { font-size: 25px; color: var(--gold); font-weight: 900; margin-top: 2px; }
+.day-header h2 { font-size: 20px; font-weight: 900; margin: 4px 0 0; }
+.day-header .day-hint { font-size: 14px; color: #ddd; margin-top: 6px; }
+
+/* Shopping List Styling */
+.shop-group { margin-bottom: 20px; }
+.shop-title {
+  font-size: 17px;
+  font-weight: 900;
+  padding: 8px 12px;
+  background: var(--warm);
+  border-left: 5px solid var(--gold);
+  border-radius: 6px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.shop-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.15s;
+  border-radius: 8px;
+}
+.shop-item:hover { background: rgba(0,0,0,0.02); }
+.shop-item input[type="checkbox"] {
+  width: 22px;
+  height: 22px;
+  accent-color: var(--green);
+  cursor: pointer;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+.shop-text { font-size: 16px; font-weight: 600; flex: 1; line-height: 1.5; }
+.shop-item.checked .shop-text { text-decoration: line-through; color: #999; }
+.shop-tag { font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 10px; background: #eee; color: #666; }
+.link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: 12px;
+  background: var(--purple);
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  margin-top: 6px;
+}
+
+.progress-bar-wrap {
+  background: #e0e0e0;
+  border-radius: 10px;
+  height: 14px;
+  overflow: hidden;
+  margin: 10px 0 16px;
+}
+.progress-bar-fill {
+  background: linear-gradient(90deg, var(--gold), var(--green));
+  height: 100%;
+  width: 0%;
+  transition: width 0.3s;
+}
+
+/* Weather & Outfit Styling */
+.weather-card {
+  background: linear-gradient(135deg, #2b5876, #4e4376);
+  color: white;
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 16px;
+}
+.outfit-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 10px; }
+@media (min-width: 600px) { .outfit-grid { grid-template-columns: 1fr 1fr; } }
+
+.outfit-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: var(--shadow);
+}
+.outfit-card .hdr { font-weight: 900; font-size: 16px; color: var(--ink); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+.outfit-card p { font-size: 14px; color: #444; line-height: 1.6; }
+
+/* Currency */
+.currency-card { background: linear-gradient(135deg, #ffffff, #fcf8f2); border: 2px solid var(--gold); }
+.currency-total { background: var(--ink); color: white; border-radius: 14px; padding: 18px; margin: 14px 0; text-align: center; }
+.currency-total .lbl { font-size: 14px; color: #ddd; margin-bottom: 4px; }
+.currency-total .num { font-size: 34px; font-weight: 900; color: var(--gold); font-family: 'Outfit', sans-serif; }
+
+/* Emergency / SOS */
+.emergency-num { background: var(--ink); color: white; border-radius: 14px; padding: 16px; margin-bottom: 12px; }
+.emergency-num .lbl { font-size: 14px; color: #ccc; margin-bottom: 4px; line-height: 1.5; }
+.emergency-num .num { font-size: 28px; font-weight: 900; color: var(--gold); letter-spacing: 1px; font-family: 'Outfit', sans-serif; }
+.loc-result { margin-top: 12px; background: #fff8e1; border: 2px solid var(--gold); border-radius: 12px; padding: 14px; font-size: 15px; line-height: 1.8; display: none; }
+.loc-result.show { display: block; }
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 24px; left: 50%;
+  transform: translateX(-50%);
+  background: var(--ink);
+  color: white;
+  padding: 12px 22px;
+  border-radius: 30px;
+  font-size: 15px;
+  font-weight: 700;
+  z-index: 999;
+  box-shadow: 0 4px 16px rgba(0,0,0,.3);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s;
+}
+.toast.show { opacity: 1; }
+
+.taxi-card {
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  color: white;
+  border-radius: 16px;
+  padding: 22px 18px;
+  text-align: center;
+  margin-top: 12px;
+  display: none;
+}
+.taxi-card.show { display: block; }
+.taxi-lbl { font-size: 13px; color: #aaa; margin-bottom: 8px; }
+.taxi-name { font-size: 26px; font-family: 'Zen Kaku Gothic New', sans-serif; font-weight: 700; color: var(--gold); margin-bottom: 8px; }
+.taxi-addr { font-size: 18px; font-family: 'Zen Kaku Gothic New', sans-serif; line-height: 1.8; color: #f0f0f0; }
+</style>
+</head>
+<body>
+
+<div class="top-fixed">
+<header class="app-header">
+  <div>
+    <h1>🗼 東京旅遊筆記 <span>2026</span></h1>
+    <div id="todayLine" style="font-size:13px;color:#ccc;margin-top:2px;"></div>
+  </div>
+  <div class="header-sub">9/11～9/16<br>東京·調布花火·輕井澤</div>
+</header>
+
+<nav class="nav-tabs">
+  <button class="tab-btn active" onclick="sw('itinerary',this)">📅 行程</button>
+  <button class="tab-btn" onclick="sw('shopping',this)">🛍️ 購物清單</button>
+  <button class="tab-btn" onclick="sw('hotel',this)">🎫 車票/飯店</button>
+  <button class="tab-btn" onclick="sw('currency',this)">💱 匯率</button>
+  <button class="tab-btn" onclick="sw('weather',this)">🌦️ 天氣與穿著</button>
+  <button class="tab-btn sos" onclick="sw('sos',this)">🚨 緊急聯絡</button>
+</nav>
+</div>
+
+<main class="main">
+
+<!-- ══════════ 行程 ══════════ -->
+<div id="panel-itinerary" class="panel active">
+
+  <!-- Shinkansen Alert Banner -->
+  <div class="ticket-card">
+    <div class="hdr">
+      <span>🚄 已購買新幹線車次資訊 (指定席)</span>
+      <span>JR EAST</span>
+    </div>
+    <div class="ticket-row">
+      <div>
+        <div class="ticket-date">📅 09/13/2026 (去程)</div>
+        <div class="ticket-route">UENO ➔ KARUIZAWA</div>
+      </div>
+      <div class="ticket-time">08:47 ~ 09:43</div>
+    </div>
+    <div class="ticket-row">
+      <div>
+        <div class="ticket-date">📅 09/15/2026 (回程)</div>
+        <div class="ticket-route">KARUIZAWA ➔ UENO</div>
+      </div>
+      <div class="ticket-time">09:19 ~ 10:16</div>
+    </div>
+  </div>
+
+  <div class="day-scroll" id="dayScroll"></div>
+  <div id="dayDetail"></div>
+</div>
+
+<!-- ══════════ 購物清單 ══════════ -->
+<div id="panel-shopping" class="panel">
+  <div class="card">
+    <div class="card-title">🛍️ 購物採買清單 (自動儲存勾選)</div>
+    <div class="card-subtitle">點擊項目即可勾選完成，系統會自動記住進度</div>
+    
+    <div style="display:flex; justify-content:space-between; font-size:14px; font-weight:700; margin-top:10px;">
+      <span>採買進度</span>
+      <span id="shopProgressText">0 / 0 (0%)</span>
+    </div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="shopProgressBar"></div>
+    </div>
+
+    <!-- 7-11 -->
+    <div class="shop-group">
+      <div class="shop-title">🏪 7-Eleven 採購 <span class="shop-tag">便利商店</span></div>
+      <div class="shop-item" onclick="toggleShopCheck(this)">
+        <input type="checkbox" id="shop_711_1">
+        <span class="shop-text">砂糖樹小包裝(草莓)</span>
+      </div>
+      <div class="shop-item" onclick="toggleShopCheck(this)">
+        <input type="checkbox" id="shop_711_2">
+        <span class="shop-text">黃色杯裝餅乾</span>
+      </div>
+      <div class="shop-item" onclick="toggleShopCheck(this)">
+        <input type="checkbox" id="shop_711_3">
+        <span class="shop-text">OHAYO 牛奶布丁</span>
+      </div>
+      <div class="shop-item" onclick="toggleShopCheck(this)">
+        <input type="checkbox" id="shop_711_4">
+        <span class="shop-text">福吉茶拿鐵馬卡龍冰淇淋</span>
+      </div>
+      <div class="shop-item" onclick="toggleShopCheck(this)">
+        <input type="checkbox" id="shop_711_5">
+        <span class="shop-text">巧克力袋裝餅乾</span>
+      </div>
+      <div class="shop-item" onclick="toggleShopCheck(this)">
+        <input type="checkbox" id="shop_711_6">
+        <span class="shop-text">機器奶茶(?</span>
+      </div>
+    </div>
+
+    <!-- LAWSON -->
+    <div class="shop-group">
+      <div class="shop-title">🏪 LAWSON 羅森 <span class="shop-tag">便利商店</span></div>
+      <div class="shop-item" onclick="toggleShopCheck(this)">
+        <input type="checkbox" id="shop_lawson_1">
+        <span class="shop-text">冷凍可麗露</span>
+      </div>
+      <div class="shop-item" onclick="toggleShopCheck(this)">
+        <input type="checkbox" id="shop_lawson_2">
+        <span class="shop-text">北海道鹹奶油銅鑼燒</span>
+      </div>
+      <div class="shop-item" onclick="toggleShopCheck(this)">
+        <input type="checkbox" id="shop_lawson_3">
+        <span class="shop-text">OHAYO 牛奶布丁</span>
+      </div>
+    </div>
+
+    <!-- FamilyMart -->
+    <div class="shop-group">
+      <div class="shop-title">🏪 FamilyMart 全家 <span class="shop-tag">便利商店</span></div>
+      <div class="shop-item" onclick="toggleShopCheck(this)">
+        <input type="checkbox" id="shop_fm_1">
+        <span class="shop-text">雙倍巧克力棒</span>
+      </div>
+      <div class="shop-item" onclick="toggleShopCheck(this)">
+        <input type="checkbox" id="shop_fm_2">
+        <span class="shop-text">OHAYO 牛奶布丁</span>
+      </div>
+    </div>
+
+    <!-- 超市 -->
+    <div class="shop-group">
+      <div class="shop-title">🛒 日本當地超市 <span class="shop-tag">超市生鮮</span></div>
+      <div class="shop-item" onclick="toggleShopCheck(this)">
+        <input type="checkbox" id="shop_super_1">
+        <span class="shop-text">輕井澤草莓牛奶果醬</span>
+      </div>
+      <div class="shop-item" onclick="toggleShopCheck(this)">
+        <input type="checkbox" id="shop_super_2">
+        <span class="shop-text">鹽昆布</span>
+      </div>
+    </div>
+
+    <!-- BIC CAMERA / 唐吉軻德 / 藥妝店 -->
+    <div class="shop-group">
+      <div class="shop-title">💊 BIC CAMERA / 唐吉軻德 / 藥妝店 <span class="shop-tag">藥妝雜貨</span></div>
+      <div class="shop-item" onclick="toggleShopCheck(this)">
+        <input type="checkbox" id="shop_drug_1">
+        <span class="shop-text">眉筆 * 2</span>
+      </div>
+      <div class="shop-item" onclick="toggleShopCheck(this)">
+        <input type="checkbox" id="shop_drug_2">
+        <span class="shop-text">葡萄雷根糖</span>
+      </div>
+      <div class="shop-item" onclick="toggleShopCheck(this)">
+        <input type="checkbox" id="shop_drug_3">
+        <span class="shop-text">OREO餅乾</span>
+      </div>
+      <div class="shop-item" onclick="toggleShopCheck(this)">
+        <input type="checkbox" id="shop_drug_4">
+        <span class="shop-text">DHC Q10</span>
+      </div>
+      <div class="shop-item" onclick="toggleShopCheck(this)">
+        <input type="checkbox" id="shop_drug_5">
+        <span class="shop-text">DHC 備孕營養品</span>
+      </div>
+      <div class="shop-item" onclick="toggleShopCheck(this)">
+        <input type="checkbox" id="shop_drug_6">
+        <span class="shop-text">睫毛美容液</span>
+      </div>
+      <div class="shop-item" onclick="toggleShopCheck(this)">
+        <input type="checkbox" id="shop_drug_7">
+        <span class="shop-text">指緣乳液</span>
+      </div>
+      <div class="shop-item" onclick="toggleShopCheck(this)">
+        <input type="checkbox" id="shop_drug_8">
+        <span class="shop-text">UHA 味覺糖 (鐵 & 葉酸)</span>
+      </div>
+      <div class="shop-item" onclick="toggleShopCheck(this)">
+        <input type="checkbox" id="shop_drug_9">
+        <span class="shop-text">齒磨殿堂美白牙膏</span>
+      </div>
+      <div class="shop-item" onclick="toggleShopCheck(this)">
+        <input type="checkbox" id="shop_drug_10">
+        <span class="shop-text">顆粒版休足時間</span>
+      </div>
+      <div class="shop-item" onclick="toggleShopCheck(this)">
+        <input type="checkbox" id="shop_drug_11">
+        <span class="shop-text">鹽部長昆布</span>
+      </div>
+    </div>
+
+    <!-- 星巴克 -->
+    <div class="shop-group">
+      <div class="shop-title">☕ 星巴克 Starbucks <span class="shop-tag">飲品</span></div>
+      <div class="shop-item" onclick="toggleShopCheck(this)">
+        <input type="checkbox" id="shop_sb_1">
+        <span class="shop-text">焙茶拿鐵</span>
+      </div>
+    </div>
+
+    <!-- 麥當勞 -->
+    <div class="shop-group">
+      <div class="shop-title">🍔 麥當勞 McDonald's <span class="shop-tag">速食點心</span></div>
+      <div class="shop-item" onclick="toggleShopCheck(this)">
+        <input type="checkbox" id="shop_mc_1">
+        <span class="shop-text">奶油紅豆麻糬派</span>
+      </div>
+      <div class="shop-item" onclick="toggleShopCheck(this)">
+        <input type="checkbox" id="shop_mc_2">
+        <span class="shop-text">薄巧冰沙</span>
+      </div>
+      <div class="shop-item" onclick="toggleShopCheck(this)">
+        <input type="checkbox" id="shop_mc_3">
+        <span class="shop-text">鬆餅堡</span>
+      </div>
+      <div class="shop-item" onclick="toggleShopCheck(this)">
+        <input type="checkbox" id="shop_mc_4">
+        <span class="shop-text">起司培根馬鈴薯派</span>
+      </div>
+    </div>
+
+    <!-- 貴的高級品/皮夾/彩妝 -->
+    <div class="shop-group">
+      <div class="shop-title" style="border-left-color: var(--pink);">💎 專櫃精品皮夾 & 彩妝 (貴的) <span class="shop-tag" style="background:#fce4ec;color:#c2185b;">精品彩妝</span></div>
+      
+      <div class="shop-item" onclick="toggleShopCheck(this)">
+        <input type="checkbox" id="shop_luxury_1">
+        <div class="shop-text">
+          <div>👛 百貨或 Outlet 看皮夾 (LONGCHAMP, COACH, GUCCI, CELINE)</div>
+          <div style="font-size:13px; color:var(--muted); margin-top:2px;">（銀座三越退稅85,800，或找有貨的街邊店）</div>
+          <a href="https://www.gucci.com/jp/ja/pr/women/small-leather-goods-for-women/folded-wallets-for-women/bi-color-gg-marmont-small-wallet-p-772738AAHH91745" target="_blank" class="link-btn" onclick="event.stopPropagation()">
+            🔗 查看 GUCCI 雙色 Marmont 短夾官網連結
+          </a>
+        </div>
+      </div>
+
+      <div class="shop-item" onclick="toggleShopCheck(this)">
+        <input type="checkbox" id="shop_luxury_2">
+        <div class="shop-text">
+          <div>💄 CHANEL 雙頭唇萃</div>
+          <div style="font-size:13px; color:var(--muted); margin-top:2px;">色號：#174 Endless Pink 或 #192 Coral Pink（機場免稅日幣5,700、或是百貨95折再退稅）</div>
+          <a href="https://www.chanel.com/jp/makeup/p/175192/le-rouge-duo-ultra-tenue-ultrawear-liquid-lip-colour/" target="_blank" class="link-btn" onclick="event.stopPropagation()">
+            🔗 查看 CHANEL 唇萃官網連結
+          </a>
+        </div>
+      </div>
+
+      <div class="shop-item" onclick="toggleShopCheck(this)">
+        <input type="checkbox" id="shop_luxury_3">
+        <span class="shop-text">🧼 Fancl Clay gel facial wash 泥膜角質洗顏霜</span>
+      </div>
+
+      <div class="shop-item" onclick="toggleShopCheck(this)">
+        <input type="checkbox" id="shop_luxury_4">
+        <span class="shop-text">✨ 肌膚之鑰 (Clé de Peau Beauté) 粉底還是妝前乳</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════ 車票 & 飯店 ══════════ -->
+<div id="panel-hotel" class="panel">
+  
+  <div class="card">
+    <div class="card-title">🚄 已購買新幹線車票細節</div>
+    <div class="ticket-card" style="margin-bottom:0;">
+      <div class="hdr">
+        <span>JR 東日本新幹線 (北陸新幹線)</span>
+        <span>已完成預約／指定席</span>
+      </div>
+      <div class="ticket-row">
+        <div>
+          <div class="ticket-date">乘車日：09/13/2026 (日)</div>
+          <div class="ticket-route">UENO ➔ KARUIZAWA</div>
+        </div>
+        <div class="ticket-time">08:47 ~ 09:43</div>
+      </div>
+      <div class="ticket-row">
+        <div>
+          <div class="ticket-date">乘車日：09/15/2026 (二)</div>
+          <div class="ticket-route">KARUIZAWA ➔ UENO</div>
+        </div>
+        <div class="ticket-time">09:19 ~ 10:16</div>
+      </div>
+      <div style="font-size:13px; color:#e0e0e0; margin-top:8px; line-height:1.5;">
+        💡 提醒：請提前15分鐘到達上野站月台搭乘。搭車前請確認持有車票或感應綁定 IC 卡。
+      </div>
+    </div>
+  </div>
+
+  <div id="hotelsList"></div>
+</div>
+
+<!-- ══════════ 匯率換算 ══════════ -->
+<div id="panel-currency" class="panel">
+  <div class="card currency-card">
+    <div class="card-title">💱 日幣換算台幣</div>
+
+    <div class="field-row">
+      <label>日幣金額 (JPY ¥)</label>
+      <input type="number" id="jpyAmount" inputmode="decimal" min="0" step="1" placeholder="例如：85800" oninput="calcCurrency()">
+    </div>
+
+    <div class="field-row">
+      <label>即時匯率 (1 JPY 等於幾 TWD)</label>
+      <input type="number" id="jpyRate" inputmode="decimal" min="0" step="0.001" value="0.21" oninput="calcCurrency()">
+    </div>
+
+    <div class="currency-total">
+      <div class="lbl">折合台幣約</div>
+      <div class="num" id="twdResult">NT$ 0</div>
+    </div>
+
+    <button class="save-btn" onclick="saveCurrencyRate()">💾 儲存預設匯率</button>
+    <div style="font-size:14px; color:var(--muted); line-height:1.7; margin-top:12px;">
+      💡 小心算速記法：日幣價格直接 × 0.21 估算台幣。如退稅後 85,800 日圓約等於 NT$ 18,018。
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ 天氣與穿著 ══════════ -->
+<div id="panel-weather" class="panel">
+  
+  <div class="card">
+    <div class="card-title" style="color:var(--red);">⚠️ 天氣重點警語提醒</div>
+    
+    <div class="alert-box warning">
+      <strong>☔ 1. 秋季東京雨具提醒：</strong><br>
+      9 月上中旬的東京仍處於颱風季與午後劇烈雷陣雨高發期，出門隨身必帶輕便折疊傘或雨衣！
+    </div>
+
+    <div class="alert-box warning">
+      <strong>🎆 2. 9/12 調布花火大會特別注意事項：</strong><br>
+      • 觀賞地點（電通大操場）為<strong>泥土地面</strong>，若遇雨或前日降雨地面會濕滑泥濘。<br>
+      • 請務必攜帶<strong>「厚防水地墊」</strong>以及<strong>「輕便雨衣」</strong>。<br>
+      • <strong>會場內嚴禁撐傘！</strong>（以免遮擋後方民眾視線），下雨請直接穿著雨衣。
+    </div>
+
+    <div class="alert-box info">
+      <strong>🏔️ 3. 9/13~9/15 輕井澤高原氣溫警告：</strong><br>
+      • 輕井澤位於海拔 1,000 公尺高原，氣溫相較東京市區<strong>低 5℃ ～ 8℃</strong>。<br>
+      • 9 月中旬早晚溫差顯著（早晚可能跌至 14°C~18°C），清晨與夜間偏涼，<strong>必須準備薄外套、風衣或針織衫保暖！</strong>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">👔 行程穿著建議</div>
+    <div class="outfit-grid">
+      
+      <div class="outfit-card">
+        <div class="hdr">🗼 東京市區 (9/11, 9/12, 9/15, 9/16)</div>
+        <p>
+          • <strong>日間穿著：</strong>透氣短袖、薄洋裝、短褲/寬褲。<br>
+          • <strong>鞋款：</strong>耐走運動鞋或涼鞋。<br>
+          • <strong>隨身物品：</strong>防曬外套、墨鏡、折疊傘、防曬乳。
+        </p>
+      </div>
+
+      <div class="outfit-card">
+        <div class="hdr">🎆 9/12 花火大會戶外特別建議</div>
+        <p>
+          • <strong>穿著：</strong>好穿透氣衣物與不怕髒的布鞋。<br>
+          • <strong>必備裝備：</strong>厚防水地墊、輕便雨衣（場內禁撐傘）、矮腳架相機、防蚊液、濕紙巾。
+        </p>
+      </div>
+
+      <div class="outfit-card">
+        <div class="hdr">🌲 9/13 ~ 9/15 輕井澤渡假穿著</div>
+        <p>
+          • <strong>穿著：</strong>洋蔥式穿法！內穿薄短袖/長袖，外加風衣、薄外套或針織外套。<br>
+          • <strong>鞋款：</strong>騎腳踏車與森林步道適合的休閒運動鞋。
+        </p>
+      </div>
+
+      <div class="outfit-card">
+        <div class="hdr">✈️ 往返機場與返台穿著</div>
+        <p>
+          • <strong>穿著：</strong>舒適彈性長褲、輕鬆上衣與保暖薄外套，方便機上休息與拿取行李。
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════ 🚨 緊急聯絡 (Replacing Translation) ══════════ -->
+<div id="panel-sos" class="panel">
+  <div class="card" style="background: linear-gradient(135deg, #780206, #061161); color: white;">
+    <div class="card-title" style="color: white; border-bottom-color: var(--gold);">🚨 日本當地緊急救助電話</div>
+    <div style="font-size:15px; opacity:0.9; margin-bottom:12px;">遇到突發狀況時，請保持冷靜，可直接透過手機撥打或請店員/路人協助撥打：</div>
+  </div>
+
+  <div class="emergency-num">
+    <div class="lbl">🚑 日本救護車／消防 (免費，救急・火灾)</div>
+    <div class="num">119</div>
+  </div>
+  <a href="tel:119" class="big-btn red">📞 直接撥打 119 (救護車 / 消防)</a>
+
+  <div class="emergency-num">
+    <div class="lbl">👮 日本警察 (免費，事件・事故・迷路)</div>
+    <div class="num">110</div>
+  </div>
+  <a href="tel:110" class="big-btn orange">📞 直接撥打 110 (警察)</a>
+
+  <div class="emergency-num">
+    <div class="lbl">🇹🇼 台北駐日經濟文化代表處（東京大使館 / 駐日代表處）<br>僅供重大人身安全急難救助（如車禍、強盜、緊急就醫）</div>
+    <div class="num">080-1009-7179</div>
+  </div>
+  <a href="tel:08010097179" class="big-btn blue">📞 撥打東京代表處 24H 緊急救助專線</a>
+  <div style="font-size:13px; color:var(--muted); margin:-4px 0 16px; line-height:1.6;">
+    📍 代表處地址：東京都港区白金台5-20-2<br>
+    🏢 一般護照/簽證諮詢辦公電話 (非緊急)：03-3280-7111
+  </div>
+
+  <div class="card">
+    <div class="card-title">📍 一鍵複製我目前的位置</div>
+    <div style="font-size:15px; color:#444; margin-bottom:12px; line-height:1.7;">
+      若迷路或需要緊急支援，點擊下方按鈕可取得 GPS 座標與地圖連結，可直接複製貼到 LINE 傳給家人或同行者。
+    </div>
+    <button class="big-btn green" onclick="getMyLocation()">📍 點我抓取並複製目前位置<small>取得 GPS 座標與地址</small></button>
+    <div class="loc-result" id="locResult"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">👨‍👩‍👧 隨行家屬 / 緊急聯絡人</div>
+    <div class="field-row">
+      <label>緊急聯絡人電話</label>
+      <input type="tel" id="familyPhone" value="" placeholder="例：+886 912-345-678">
+    </div>
+    <button class="save-btn" style="margin-bottom:12px;" onclick="saveContacts()">💾 儲存電話號碼</button>
+    <a href="#" class="big-btn purple" onclick="callSaved('familyPhone');return false;">📞 撥打緊急聯絡人電話</a>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🚕 計程車司機日文溝通字卡</div>
+    <div style="font-size:15px; color:#444; margin-bottom:10px;">點擊開啟字卡展示給計程車司機看：</div>
+    <button class="big-btn blue" onclick="toggleTaxi('ueno')">🚕 展示「上野站」日文地址字卡</button>
+    <div class="taxi-card" id="taxi-ueno">
+      <div class="taxi-lbl">請將此畫面出示給計程車司機 (タクシー運転手へ)</div>
+      <div class="taxi-name">上野駅（UENO STATION）</div>
+      <div class="taxi-addr">〒110-0005 東京都台東区上野7丁目<br>上野駅までお願いします。</div>
+    </div>
+  </div>
+
+</div>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════
+// INIT & TODAY
+// ══════════════════════════════════════
+const today = new Date();
+document.getElementById('todayLine').textContent =
+  today.toLocaleDateString('zh-TW', { month: 'long', day: 'numeric', weekday: 'short' });
+
+function sw(name, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  btn.classList.add('active');
+  requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: 'auto' }));
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2400);
+}
+
+// ══════════════════════════════════════
+// SHOPPING LIST PERSISTENCE
+// ══════════════════════════════════════
+function initShoppingList() {
+  const checkboxes = document.querySelectorAll('#panel-shopping input[type="checkbox"]');
+  checkboxes.forEach(cb => {
+    const saved = localStorage.getItem('shop_' + cb.id);
+    if (saved === 'true') {
+      cb.checked = true;
+      cb.closest('.shop-item').classList.add('checked');
+    }
+  });
+  updateShopProgress();
+}
+
+function toggleShopCheck(itemEl) {
+  const cb = itemEl.querySelector('input[type="checkbox"]');
+  if (event.target !== cb) {
+    cb.checked = !cb.checked;
+  }
+  if (cb.checked) {
+    itemEl.classList.add('checked');
+  } else {
+    itemEl.classList.remove('checked');
+  }
+  localStorage.setItem('shop_' + cb.id, cb.checked);
+  updateShopProgress();
+}
+
+function updateShopProgress() {
+  const checkboxes = document.querySelectorAll('#panel-shopping input[type="checkbox"]');
+  const total = checkboxes.length;
+  let checked = 0;
+  checkboxes.forEach(cb => { if (cb.checked) checked++; });
+  const pct = total > 0 ? Math.round((checked / total) * 100) : 0;
+  
+  document.getElementById('shopProgressText').textContent = `${checked} / ${total} (${pct}%)`;
+  document.getElementById('shopProgressBar').style.width = pct + '%';
+}
+
+// ══════════════════════════════════════
+// CURRENCY
+// ══════════════════════════════════════
+function loadCurrencyRate() {
+  const savedRate = localStorage.getItem('jpyRate');
+  if (savedRate) {
+    document.getElementById('jpyRate').value = savedRate;
+  }
+  calcCurrency();
+}
+
+function calcCurrency() {
+  const amount = parseFloat(document.getElementById('jpyAmount').value) || 0;
+  const rate = parseFloat(document.getElementById('jpyRate').value) || 0;
+  const total = Math.round(amount * rate);
+  document.getElementById('twdResult').textContent = 'NT$ ' + total.toLocaleString('zh-TW');
+}
+
+function saveCurrencyRate() {
+  const rate = document.getElementById('jpyRate').value.trim();
+  if (!rate || Number(rate) <= 0) { showToast('請輸入有效匯率'); return; }
+  localStorage.setItem('jpyRate', rate);
+  calcCurrency();
+  showToast('✅ 已儲存匯率');
+}
+
+// ══════════════════════════════════════
+// SOS & EMERGENCY
+// ══════════════════════════════════════
+function saveContacts() {
+  const val = document.getElementById('familyPhone').value.trim();
+  localStorage.setItem('familyPhone', val);
+  showToast('✅ 已儲存電話號碼');
+}
+
+function loadContacts() {
+  document.getElementById('familyPhone').value = localStorage.getItem('familyPhone') || '';
+}
+
+function callSaved(fieldId) {
+  const num = document.getElementById(fieldId).value.trim();
+  if (!num) { showToast('請先輸入電話號碼並儲存'); return; }
+  window.location.href = 'tel:' + num.replace(/[^0-9+]/g, '');
+}
+
+function toggleTaxi(id) {
+  document.getElementById('taxi-' + id).classList.toggle('show');
+}
+
+function getMyLocation() {
+  const box = document.getElementById('locResult');
+  box.classList.add('show');
+  box.innerHTML = '📡 定位中，請稍候...';
+  if (!navigator.geolocation) {
+    box.innerHTML = '⚠️ 此裝置不支援定位功能';
+    return;
+  }
+  navigator.geolocation.getCurrentPosition(async (pos) => {
+    const lat = pos.coords.latitude.toFixed(6);
+    const lng = pos.coords.longitude.toFixed(6);
+    const mapUrl = `https://maps.google.com/?q=${lat},${lng}`;
+    let addressText = '';
+    try {
+      const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=ja`);
+      const data = await res.json();
+      if (data && data.display_name) { addressText = data.display_name; }
+    } catch (e) {}
+
+    const copyText = addressText
+      ? `現在位置：${addressText}\n地圖連結：${mapUrl}`
+      : `現在位置座標：${lat}, ${lng}\n地圖連結：${mapUrl}`;
+
+    box.innerHTML = `
+      <div style="font-weight:900;margin-bottom:8px;">📍 已抓到您的位置：</div>
+      ${addressText ? `<div style="margin-bottom:8px;">${addressText}</div>` : ''}
+      <div style="font-size:14px;color:#777;margin-bottom:10px;">座標：${lat}, ${lng}</div>
+      <button class="save-btn" style="margin-bottom:8px;" onclick="copyText(this)" data-copy="${encodeURIComponent(copyText)}">📋 複製位置文字（可貼至 LINE）</button>
+      <a href="${mapUrl}" target="_blank" class="t-btn walk" style="display:flex; justify-content:center;">🗺️ 在 Google 地圖打開</a>
+    `;
+  }, (err) => {
+    box.innerHTML = '⚠️ 無法取得定位，請確認手機已開啟「定位服務」並允許瀏覽器存取。';
+  }, { enableHighAccuracy: true, timeout: 12000 });
+}
+
+function copyPlainText(text, successMsg) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => showToast(successMsg));
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    showToast(successMsg);
+  }
+}
+
+function copyText(btn) {
+  const text = decodeURIComponent(btn.getAttribute('data-copy'));
+  copyPlainText(text, '✅ 已複製位置文字');
+}
+
+// ══════════════════════════════════════
+// HOTELS DATA
+// ══════════════════════════════════════
+const hotels = [
+  {
+    id: 'ueno', name: '上野住宿飯店 (Ueno Hotel)', jp: '上野エリアのホテル', en: 'Ueno Hotel',
+    dates: '📅 9/11～9/13、9/15～9/16 住宿', mapQuery: '上野駅 東京都台東区',
+    addr: '東京都台東区上野（JR 上野站步行可達）',
+    taxiJp: 'JR上野駅',
+    taxiAddr: '〒110-0005<br>東京都台東区上野7丁目<br>JR上野駅までお願いします',
+    tel: '0312345678'
+  },
+  {
+    id: 'karuizawa', name: '輕井澤渡假飯店', jp: '軽井沢エリアのホテル', en: 'Karuizawa Hotel',
+    dates: '📅 9/13～9/15 住宿 (輕井澤高原)', mapQuery: '軽井沢駅 長野県北佐久郡軽井沢町',
+    addr: '長野県北佐久郡軽井沢町（JR 輕井澤站周邊）',
+    taxiJp: '軽井沢駅',
+    taxiAddr: '長野県北佐久郡軽井沢町<br>軽井沢駅までお願いします',
+    tel: '0267123456'
+  }
+];
+
+function renderHotels() {
+  document.getElementById('hotelsList').innerHTML = hotels.map(h => {
+    const savedRoom = localStorage.getItem('room_' + h.id) || '';
+    const savedTel = localStorage.getItem('tel_' + h.id) || h.tel || '';
+    const navUrl = `https://maps.google.com/?q=${encodeURIComponent(h.mapQuery)}`;
+    return `
+    <div class="card">
+      <div class="card-title">🏨 ${h.name}</div>
+      <div style="font-size:14px; color:var(--muted); font-family:'Zen Kaku Gothic New',sans-serif;">${h.jp}</div>
+      <div style="font-size:14px; color:var(--gold); font-weight:700; margin:4px 0 10px;">${h.dates}</div>
+      <div style="font-size:15px; color:#444; margin-bottom:12px; line-height:1.7;">📍 ${h.addr}</div>
+      
+      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
+        <a href="${navUrl}" target="_blank" class="t-btn walk" style="flex:1; justify-content:center;">🗺️ 導航去飯店</a>
+        <button class="t-btn subway" style="flex:1; justify-content:center;" onclick="toggleTaxi('${h.id}')">🚕 計程車字卡</button>
+      </div>
+
+      <div class="taxi-card" id="taxi-${h.id}">
+        <div class="taxi-lbl">請將此畫面出示給計程車司機 (タクシー運転手へ)</div>
+        <div class="taxi-name">${h.taxiJp}</div>
+        <div class="taxi-addr">${h.taxiAddr}</div>
+      </div>
+
+      <div style="background:var(--warm); border-radius:12px; padding:12px;">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+          <div class="field-row">
+            <label>🚪 房號</label>
+            <input type="text" id="room_${h.id}" value="${savedRoom}" placeholder="例如: 802">
+          </div>
+          <div class="field-row">
+            <label>📞 飯店電話</label>
+            <input type="tel" id="tel_${h.id}" value="${savedTel}" placeholder="電話號碼">
+          </div>
+        </div>
+        <button class="save-btn" onclick="saveHotel('${h.id}')">💾 儲存房號與電話</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function saveHotel(id) {
+  const room = document.getElementById('room_' + id).value.trim();
+  const tel = document.getElementById('tel_' + id).value.trim();
+  localStorage.setItem('room_' + id, room);
+  localStorage.setItem('tel_' + id, tel);
+  renderHotels();
+  showToast('✅ 已儲存飯店資訊');
+}
+
+// ══════════════════════════════════════
+// ITINERARY DATA
+// ══════════════════════════════════════
+function gmap(dest, mode) {
+  return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(dest)}&travelmode=${mode || 'transit'}`;
+}
+
+const days = [
+  {
+    day: 1, date: '9/11(五)', title: '抵達東京 ➔ 上野 Check-in', emoji: '✈️', hotel: '上野住宿飯店',
+    tip: '抵達東京後搭乘京成電鐵 Skyliner 直達上野，方便快速辦理 Check-in 入住。',
+    items: [
+      { type: 'transport', time: '下午', name: '抵達東京成田/羽田機場 ➔ 上野', desc: '搭乘 Skyliner 或單軌電車至上野站。',
+        btn: { label: '導航到上野站', mode: 'subway', url: gmap('上野駅', 'transit') } },
+      { type: 'spot', time: '傍晚', name: '上野阿美橫町散策與採買', desc: '阿美橫町藥妝、零食、水果攤逛街。',
+        btn: { label: '導航到阿美橫町', mode: 'walk', url: gmap('アメ横', 'walking') } }
+    ]
+  },
+  {
+    day: 2, date: '9/12(六)', title: '吉祥寺秋祭 ➔ 調布花火大會', emoji: '🎆', hotel: '上野住宿飯店',
+    tip: '今日精華亮點！吉祥寺秋祭宮神輿渡御 ＋ 調布萬發花火大會。花火會場為泥土地，記得攜帶厚防水地墊與輕便雨衣（會場內嚴禁撐傘）！',
+    items: [
+      {
+        type: 'transport', time: '09:00 - 11:00', name: '上野 ➔ 吉祥寺，散策井之頭公園', jp: '上野駅 → 神田駅 → 吉祥寺駅',
+        desc: '• 上野搭乘 JR 山手線至神田，轉乘 JR 中央線快速至吉祥寺。<br>• 抵達吉祥寺後散策井之頭恩賜公園，感受綠意與湖畔風光。',
+        tags: ['JR山手線', 'JR中央線快速', '散步'],
+        btn: { label: '導航到井之頭公園', mode: 'walk', url: gmap('井の頭恩賜公園', 'transit') }
+      },
+      {
+        type: 'event', time: '11:00 - 15:45', name: '吉祥寺秋祭：觀賞宮神輿渡御與商店街', jp: '吉祥寺秋まつり・宮神輿渡御・サンロード',
+        desc: '• 觀賞熱鬧非凡的宮神輿渡御、Sunroad 商店街與平和通兒童神輿。<br>• 於商店街採購傍晚野餐冷食、飲料與點心。',
+        tags: ['秋祭熱鬧', '宮神輿渡御', '野餐採購'],
+        btn: { label: '導航到 Sunroad 商店街', mode: 'walk', url: gmap('吉祥寺サンロード商店街', 'walking') }
+      },
+      {
+        type: 'transport', time: '15:45 - 16:30', name: '移動前往調布與電通大操場', jp: '吉祥寺南口バス → 調布駅 → 京王多摩川駅',
+        desc: '• 吉祥寺南口搭乘小田急/京王巴士（吉06 / 吉14）至調布站。<br>• 轉乘京王線至京王多摩川站（或步行前往電通大操場）。',
+        tags: ['巴士吉06/14', '京王線', '花火移動'],
+        btn: { label: '導航到電通大操場', mode: 'bus', url: gmap('電気通信大学グラウンド', 'transit') }
+      },
+      {
+        type: 'event', time: '16:30 - 18:15', name: '入座電通大操場自由席 ＆ 野餐準備', jp: '電気通信大学グラウンド・自由席',
+        desc: '• 入座電通大操場自由席，開始享用野餐冷食並架設矮腳架相機。<br>⚠️ <strong>注意事項：</strong>操場為泥土地，務必鋪設厚防水地墊。若遇雨請穿著輕便雨衣（<strong>場內嚴禁撐傘</strong>以免擋住後方視線）。',
+        tags: ['野餐', '相機腳架', '厚防水地墊', '嚴禁撐傘'],
+        btn: { label: '導航到電通大操場會場', mode: 'walk', url: gmap('電気通信大学グラウンド', 'walking') }
+      },
+      {
+        type: 'event', time: '18:15 - 19:15', name: '🎆 調布花火大會（萬發花火 × 震撼配樂）', jp: '映画のまち調布花火',
+        desc: '• 觀賞盛大極致的調布花火大會！萬發花火伴隨經典配樂夜空綻放。',
+        tags: ['萬發花火', '音樂花火', '夜空盛典'],
+        btn: { label: '導航到花火會場', mode: 'walk', url: gmap('電気通信大学グラウンド', 'walking') }
+      },
+      {
+        type: 'transport', time: '19:20 - 20:45', name: '散場返程：步行至調布站 ➔ 新宿 ➔ 上野', jp: '調布駅 → 京王線特急 → 新宿駅 → 山手線 → 上野駅',
+        desc: '• 散場步行至調布站，搭乘京王線特急直達新宿站。<br>• 於新宿站轉乘 JR 山手線返回上野飯店休息。',
+        tags: ['散場返程', '京王線特急', '山手線'],
+        btn: { label: '導航到調布站', mode: 'walk', url: gmap('調布駅', 'walking') }
+      }
+    ]
+  },
+  {
+    day: 3, date: '9/13(日)', title: '新幹線前往輕井澤 ➔ 高原渡假', emoji: '🚄', hotel: '輕井澤渡假飯店',
+    tip: '已購買 08:47~09:43 上野➔輕井澤新幹線指定席！抵達後開啟輕井澤高原度假模式。',
+    items: [
+      {
+        type: 'transport', time: '08:47 - 09:43', name: '🚄 新幹線指定席：UENO ➔ KARUIZAWA', jp: '上野駅 → 北陸新幹線 → 軽井沢駅',
+        desc: '• <strong>已預約車次：</strong>08:47 上野發車 ➔ 09:43 抵達輕井澤。<br>• 請提前 15 分鐘至上野站新幹線月台搭車。',
+        tags: ['已購車票', '08:47-09:43', '北陸新幹線'],
+        btn: { label: '導航到上野站新幹線月台', mode: 'train', url: gmap('上野駅 新幹線', 'transit') }
+      },
+      {
+        type: 'spot', time: '10:30 - 15:00', name: '舊輕井澤銀座通 ＆ 雲場池散策', jp: '旧軽井沢銀座通り・雲場池',
+        desc: '• 租借腳踏車或步行漫遊舊輕井澤銀座通老街。<br>• 品嚐輕井澤果醬、果汁，前往天鵝湖雲場池欣賞高原水色。',
+        tags: ['雲場池', '銀座通老街', '草莓果醬'],
+        btn: { label: '導航到雲場池', mode: 'walk', url: gmap('雲場池', 'walking') }
+      },
+      {
+        type: 'spot', time: '15:30 - 19:00', name: '輕井澤王子 Outlet (Prince Shopping Plaza)', jp: '軽井沢・プリンスショッピングプラザ',
+        desc: '• 逛輕井澤大型 Outlet，享受綠草地與湖畔購物環境。',
+        tags: ['Outlet購物', '精品免稅'],
+        btn: { label: '導航到輕井澤 Outlet', mode: 'walk', url: gmap('軽井沢・プリンスショッピングプラザ', 'walking') }
+      }
+    ]
+  },
+  {
+    day: 4, date: '9/14(一)', title: '輕井澤森林漫遊 ➔ 星野溫泉休閒', emoji: '🌲', hotel: '輕井澤渡假飯店',
+    tip: '輕井澤早晚溫差大（低至15~18°C），早晚請穿著薄外套或風衣保暖。',
+    items: [
+      {
+        type: 'spot', time: '上午', name: '高原教會 ＆ 石之教會建築尋幽', jp: '軽井沢高原教会・石の教会',
+        desc: '• 參觀沉靜在森林中的美麗教堂，感受建築與自然相融的寧靜。',
+        tags: ['森林教堂', '石之教會'],
+        btn: { label: '導航到高原教會', mode: 'walk', url: gmap('軽井沢高原教会', 'transit') }
+      },
+      {
+        type: 'spot', time: '下午', name: '榆樹街小鎮 (Harunire Terrace) ＆ 星野泡湯', jp: 'ハルニレテラス・星野温泉トンボの湯',
+        desc: '• 在溪谷旁的榆樹街木棧道咖啡廳享用下午茶。<br>• 於星野溫泉「蜻蜓之湯」享受清涼高原溫泉。',
+        tags: ['榆樹街小鎮', '星野溫泉'],
+        btn: { label: '導航到榆樹街小鎮', mode: 'walk', url: gmap('ハルニレテラス', 'walking') }
+      }
+    ]
+  },
+  {
+    day: 5, date: '9/15(二)', title: '輕井澤新幹線返上野 ➔ 東京採購', emoji: '🚄', hotel: '上野住宿飯店',
+    tip: '已購買 09:19~10:16 輕井澤➔上野新幹線指定席！中午返回東京展開百貨與專櫃採買。',
+    items: [
+      {
+        type: 'transport', time: '09:19 - 10:16', name: '🚄 新幹線指定席：KARUIZAWA ➔ UENO', jp: '軽井沢駅 → 北陸新幹線 → 上野駅',
+        desc: '• <strong>已預約車次：</strong>09:19 輕井澤發車 ➔ 10:16 抵達上野。<br>• 辦理退房後至輕井澤站搭車返抵上野。',
+        tags: ['已購車票', '09:19-10:16', '北陸新幹線'],
+        btn: { label: '導航到輕井澤站', mode: 'train', url: gmap('軽井沢駅', 'transit') }
+      },
+      {
+        type: 'spot', time: '11:00 - 16:00', name: '銀座三越百貨 / 專櫃採購皮夾與彩妝', jp: '銀座三越・CHANEL・GUCCI',
+        desc: '• 前往銀座三越看皮夾（LONGCHAMP, COACH, GUCCI, CELINE），享 5% 折扣與退稅！<br>• 採購 CHANEL 雙頭唇萃（#174 / #192）及 Fancl 泥膜洗顏霜。',
+        tags: ['銀座三越退稅', 'GUCCI皮夾', 'CHANEL唇萃'],
+        btn: { label: '導航到銀座三越', mode: 'subway', url: gmap('銀座三越', 'transit') }
+      },
+      {
+        type: 'spot', time: '傍晚', name: 'BIC CAMERA / 唐吉軻德補齊藥妝零食', jp: 'ドン・キホーテ・ビックカメラ',
+        desc: '• 採購眉筆、DHC Q10、UHA 鐵葉酸味覺糖、休足時間與零食。',
+        tags: ['藥妝採購', '零食補貨'],
+        btn: { label: '導航到 BIC CAMERA 上野店', mode: 'walk', url: gmap('ビックカメラ 上野店', 'walking') }
+      }
+    ]
+  },
+  {
+    day: 6, date: '9/16(三)', title: '上野公園悠閒散策 ➔ 機場返台', emoji: '🛫', hotel: '上野 ➔ 機場',
+    tip: '整理行李戰利品，至上野公園散步後搭乘 Skyliner 直達機場返台。',
+    items: [
+      { type: 'spot', time: '上午', name: '上野不忍池與公園散步', desc: '把握最後時光於上野公園步道散步。',
+        btn: { label: '導航到不忍池', mode: 'walk', url: gmap('不忍池', 'walking') } },
+      { type: 'transport', time: '下午', name: '上野搭乘 Skyliner ➔ 成田/羽田機場返台', desc: '搭乘電車直達機場辦理登機。',
+        btn: { label: '導航到 Skyliner 月台', mode: 'subway', url: gmap('京成上野駅', 'walking') } }
+    ]
+  }
+];
+
+function renderDayScroll() {
+  const scroll = document.getElementById('dayScroll');
+  scroll.innerHTML = days.map((d, i) =>
+    `<button class="day-btn ${i === 1 ? 'active' : ''}" onclick="showDay(${i},this)">
+      <span class="big-date">${d.date}</span>Day ${d.day}</button>`
+  ).join('');
+}
+
+function showDay(idx, btn) {
+  document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const d = days[idx];
+  const modeClass = { subway: 'subway', train: 'train', bus: 'bus', walk: 'walk', taxi: 'taxi', transit: 'subway', driving: 'taxi', walking: 'walk' };
+  
+  document.getElementById('dayDetail').innerHTML = `
+    <div class="day-header">
+      <div class="day-num">DAY ${d.day}</div>
+      <div class="day-date-big">${d.date}</div>
+      <h2>${d.emoji} ${d.title}</h2>
+      <div class="day-hint">🏨 ${d.hotel}</div>
+    </div>
+    ${d.tip ? `<div class="alert-box">💡 ${d.tip}</div>` : ''}
+    <div class="card">
+      <div class="timeline">
+        ${d.items.map(item => `
+          <div class="tl-item ${item.type}">
+            <div class="tl-time">${item.time || ''}</div>
+            <div class="tl-name">${item.name}</div>
+            ${item.jp ? `<div class="tl-jp">${item.jp}</div>` : ''}
+            ${item.desc ? `<div class="tl-intro">${item.desc}</div>` : ''}
+            ${item.tags ? `<div class="tl-tags">${item.tags.map(t => `<span class="tag ${item.type}">${t}</span>`).join('')}</div>` : ''}
+            ${item.btn ? `<a href="${item.btn.url}" target="_blank" class="t-btn ${modeClass[item.btn.mode] || 'walk'}">🗺️ ${item.btn.label}</a>` : ''}
+          </div>`).join('')}
+      </div>
+    </div>`;
+  requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: 'auto' }));
+}
+
+function stickyDayScroll() {
+  const topFixed = document.querySelector('.top-fixed');
+  const dayScroll = document.getElementById('dayScroll');
+  if (topFixed && dayScroll) {
+    dayScroll.style.top = topFixed.offsetHeight + 'px';
+  }
+}
+window.addEventListener('resize', stickyDayScroll);
+
+// ══════════════════════════════════════
+// STARTUP
+// ══════════════════════════════════════
+loadContacts();
+loadCurrencyRate();
+renderHotels();
+initShoppingList();
+renderDayScroll();
+// Default to Day 2 (9/12)
+const dayBtns = document.querySelectorAll('.day-btn');
+if (dayBtns.length >= 2) {
+  showDay(1, dayBtns[1]);
+} else if (dayBtns.length > 0) {
+  showDay(0, dayBtns[0]);
+}
+stickyDayScroll();
+</script>
+</body>
+</html>
